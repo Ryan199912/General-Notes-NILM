@@ -1,0 +1,110 @@
+appliance classification accuracy decreases non-linearly as the sample
+rate decreases Therefore, we need to trade-off between the
+NILM system performance and computation time,
+
+https://dl.acm.org/doi/pdf/10.1145/3427771.3427858
+
+事件的定义，定义总结笔记
+
+# IEEE Transactions on Instrumentation and Measurement
+
+# 5 Hz 是否处在一个有意义的时间分辨率区间？
+
+## 相比低采样率能够额外保留组件状态所需的短时信息，而相比更高采样率又能够以更低的数据和计算成本获得接近的组件识别能力？
+
+# 5Hz数据的组件状态需要真实标签
+
+组件状态标签
+组件启停时刻
+组件运行持续时间 
+
+# 5Hz相比其他采样率是否具有优势，可以支撑 
+
+低采样率：特征足够，有额外的特征支持 组件级别特征识别
+
+高采样率：是否有计算和存储成本优势：最佳折中点
+
+ENERTALK 很适合做外部验证，因为它提供 22 个家庭的 aggregate 和 appliance-level **15 Hz active/reactive power** 数据。
+
+# **实验1：5 Hz 中有哪些运行状态信息在 1 Hz 下无法可靠观察？* 5 Hz 下存在什么有效信息？*
+
+
+
+# **实验2：为什么是 5 Hz 左右？*
+
+ENERTALK 原始数据是 **15 Hz**，采用这种“每 N 个点求平均”的方法降采样
+
+
+
+Voltage-Current (V-I) trajectories 电压-电流 (V-I) 轨迹？
+
+sequence-based features：
+
+instantaneous frequency  amplitude, and phase features
+
+同时考虑 Q I
+
+同一类型 不同品牌电器差异大
+
+特征：
+
+### *P–Q plane*:
+
+Δ*P*: step changes in real power; Δ*Q*: step changes in reactive power; 
+
+## macroscopic transient宏观瞬态
+
+edges and slopes 
+
+### harmonics谐波
+
+### *Low freq P–Q, I and V based features*
+
+*I**rms*, *I**max*, *V**max*, *V**peak*, power factor (*PF*), and phase shift
+
+### *Spectral envelope* [Short Time Fourier Transform](https://www.sciencedirect.com/topics/engineering/short-time-fourier-transform) (STFT)
+
+
+
+### *Wavelets*:
+
+RMS: root-mean-square of current and voltage;
+
+### VI–traj: voltage–current trajectory; 
+
+电压-电流 (V-I) 轨迹： Enclosed area by *VI* trajectory with consideration of trajectory direction
+
+轨迹形状实际上是在压缩表达“相位差 + 波形畸变 + 非线性导电特性”
+
+### Har:
+
+ coefficients of fast Fourier transform (FFT); 
+
+
+
+THD: Total harmonic distortion; 
+
+VIf–traj: voltage–nonactive current trajectory;
+
+ *i*(*t*): instantaneous current waveform;
+
+ *i**f*(*t*): instantaneous nonactive current waveform; 
+
+*p*(*t*): instantaneous power waveform;
+
+*W**coef*: coefficients of wavelet transform; 
+
+*W**e*: energy of wavelet transform coefficients;
+
+ *t**r*: [transient response](https://www.sciencedirect.com/topics/physics-and-astronomy/transient-response) time based on wavelet coefficients.
+
+## NILM signature 分成三个尺度：
+
+- ### 宏观尺度（≤1 Hz）：长时间稳态、ON/OFF、较长的平台。
+
+- ### 介观尺度（约数 Hz–几十 Hz）：短状态+状态转换时序+脉冲+周期控制+持续时间+局部功率形态
+
+- ### 微观尺度（kHz）：工频周期（20ms）内部的信息,V–I trajectory、谐波、THD、启动瞬态、开关电源波形等
+
+- 
+
